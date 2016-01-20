@@ -7,13 +7,15 @@ require "docking_station"
 
     describe "#release_bike" do
       it "expects station to release bikes" do
+        bike = Bike.new
+        subject.dock bike
         instance = subject.release_bike
-        expect(instance).to be_working
+        expect(instance).to be_instance_of Bike
       end
 
       it "Raises an error if no bikes are available." do
-        instance = subject.release_bike
-        expect{instance}.to raise_error "No bikes are available."
+
+        expect{subject.release_bike}.to raise_error "No bikes are available."
       end
     end
 
