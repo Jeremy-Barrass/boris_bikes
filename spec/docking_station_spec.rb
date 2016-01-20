@@ -7,10 +7,11 @@ describe DockingStation do
 
   describe "#release_bike" do
     it "expects station to release bikes" do
-    bike = Bike.new
+      bike = Bike.new
       subject.dock bike
+      bikes = subject.bike_num
       instance = subject.release_bike
-      expect(instance).to be_instance_of Bike
+      expect(instance).to eq(bikes - 1)
     end
 
     it "Raises an error if no bikes are available." do
@@ -20,14 +21,20 @@ describe DockingStation do
 
   describe "#dock" do
     it "expects to see if bike is docked" do
-      instance = subject.bike
-      expect(instance).to eq(@bike)
+      bike = Bike.new
+      subject.dock bike
+      expect(subject.bike_num).to be >= 1
     end
 
     it "Raises an error if a bike is already docked." do
       bike = Bike.new
-      subject.dock bike
-      expect{subject.dock(bike)}.to raise_error "A bike is already docked."
+      21.times {subject.dock bike}
+      expect{subject.dock(bike)}.to raise_error "Too many bikes docked."
+    end
+    it "Has a capacity of 20 bikes" do
+      bike = Bike.new
+      20.times {subject.dock bike}
+      expect(subject.bike_num).to be == 20
     end
   end
 end
