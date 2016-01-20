@@ -28,7 +28,7 @@ describe DockingStation do
 
     it "Raises an error if a bike is already docked." do
       bike = Bike.new
-      21.times {subject.dock bike}
+      20.times {subject.dock bike}
       expect{subject.dock(bike)}.to raise_error "Too many bikes docked."
     end
     it "Has a capacity of 20 bikes" do
