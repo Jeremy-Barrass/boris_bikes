@@ -1,12 +1,11 @@
 class Van
 
-  attr_reader :broken_bikes, :mended_bikes,:capacity
+  attr_reader :bikes, :mended_bikes,:capacity
 
   DEFAULT_CAPACITY = 10
 
   def initialize(capacity = DEFAULT_CAPACITY)
-    @broken_bikes = []
-    @mended_bikes = []
+    @bikes = []
     @capacity = capacity
   end
 
@@ -14,19 +13,14 @@ class Van
   #   @broken_bikes.dup
   # end
 
-  def collect_broken_bike(bike)
-    raise 'This bike is not broken' if !bike.broken?
-    raise 'The van is full' if @broken_bikes.count >= 10
-    @broken_bikes << bike
-  end
-
-  def collect_mended_bikes(bike)
-    @mended_bikes << bike
+  def collect_bike(bike)
+    raise 'The van is full' if @bikes.count >= 10
+    @bikes << bike
   end
 
   def deposit_broken_bike
-    raise 'No broken bikes to drop off' if @broken_bikes.count == 0
-    @broken_bikes.pop
+    raise 'No broken bikes to drop off' if @bikes.count == 0
+    @bikes.pop
   end
 
   private

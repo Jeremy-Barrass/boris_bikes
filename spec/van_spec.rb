@@ -4,42 +4,33 @@ require 'bike.rb'
 describe Van do
 let(:bike) {double :bike}
   it "It collects broken bikes from the docking station." do
-    expect(subject).to respond_to(:collect_broken_bike)
+    expect(subject).to respond_to(:collect_bike)
   end
 
-  describe "#collect_broken_bike" do
+  describe "#collect_bike" do
     it "Accepts broken bikes" do
       allow(bike).to receive(:broken?).and_return(true)
-      expect { subject.collect_broken_bike(bike) }.to change { subject.broken_bikes.count }.by 1
+      expect { subject.collect_bike(bike) }.to change { subject.bikes.count }.by 1
     end
-  end
 
-  describe'#collect_broken_bike' do
-    it 'van can only take capacity of bikes' do
-      allow(bike).to receive(:broken?).and_return(true)
-      subject.capacity.times { subject.collect_broken_bike(bike) }
-      expect { subject.collect_broken_bike(bike) }.to raise_error('The van is full')
-    end
-  end
-
-  describe'#collect_broken_bike' do
-    it 'only collects broken bikes' do
-      allow(bike).to receive(:broken?).and_return(false)
-      expect { subject.collect_broken_bike(bike) }.to raise_error("This bike is not broken")
-    end
-  end
-
-  describe '#collect_mended_bikes' do
     it 'Accepts mended bikes' do
       allow(bike).to receive(:broken?).and_return(false)
-      expect {subject.collect_mended_bikes(bike)}.to change {subject.mended_bikes.count}.by 1
+      expect {subject.collect_bike(bike)}.to change {subject.bikes.count}.by 1
+    end
+  end
+
+  describe'#collect_bike' do
+    it 'van can only take capacity of bikes' do
+      allow(bike).to receive(:broken?).and_return(true)
+      subject.capacity.times { subject.collect_bike(bike) }
+      expect { subject.collect_bike(bike) }.to raise_error('The van is full')
     end
   end
 
   describe "#deposit_broken_bike" do
     it "Deposits a broken bike" do
       allow(bike).to receive(:broken?).and_return(true)
-      subject.collect_broken_bike(bike)
+      subject.collect_bike(bike)
       expect(subject.deposit_broken_bike).to eq bike
     end
   end
